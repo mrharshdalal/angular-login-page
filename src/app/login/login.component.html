@@ -1,0 +1,145 @@
+<!-- header content -->
+<div class="page">
+  <header>
+    <div class="heading">
+      <h1 id="jewellers" style="cursor: pointer">jewellers</h1>
+      <h1 id="live" style="cursor: pointer">.live</h1>
+    </div>
+  </header>
+
+  <div class="section-container">
+    <section class="image-container">
+      <img
+        src="\assets\Girl tries to enter a password on her cell phone.svg"
+        alt="login-and-signup"
+      />
+    </section>
+
+    <section class="signup-container">
+      <div class="step-box">
+        <div
+          *ngIf="first"
+          style="background-color: #ffffff; width: 80%; height: 100%"
+        >
+          <div id="signup">
+            <h2>Create Account</h2>
+          </div>
+
+          <div class="step1" *ngIf="first">
+            <span class="email">
+              <label>Email ID</label>
+              <br /><br />
+              <input class="form-control" placeholder="Enter your Email ID" />
+            </span>
+            <br>
+            <span class="password">
+              <label>Password</label>
+              <br /><br />
+              <input
+                class="form-control"
+                placeholder="Enter your Password"
+                type="password"
+              />
+            </span>
+            <br /><br />
+            <span class="button-create-account">
+              <button (click)="step1()" mat-raised-button color="primary">
+                Create Account
+              </button>
+            </span>
+
+            <hr style="margin-right: 10%; margin-top: 20px" />
+            <span class="button-signup-google">
+              <button mat-raised-button style="background-color: white">
+                SignUp with Google
+              </button>
+            </span>
+            <br /><br />
+            <p>
+              Already have an account? <a href="">Sign In</a>
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="step2"
+          *ngIf="second"
+          style="background-color: #ffffff; width: 80%; height: 100%"
+        >
+          <span class="password">
+            <label>Mobile Number*</label>
+            <br /><br />
+            <input
+              class="form-control"
+              placeholder="Enter your Mobile Number"
+              type="number"
+            />
+          </span>
+          <br /><br />
+          <span class="button-mobile">
+            <button
+              (click)="step2()"
+              mat-raised-button
+              color="primary"
+            >
+              Continue
+            </button>
+          </span>
+          <br /><br />
+          <p style="color: rgba(99, 99, 99, 1); padding-right: 2%; font-size: small;">
+            By continuing you agree to our Terms of Use and acknowledge that you
+            have read our Privacy Policy .
+          </p>
+        </div>
+
+        <div
+          class="step3"
+          *ngIf="third"
+          style="background-color: #ffffff; width: 80%; height: 100%"
+        >
+          <label>OTP*</label><br /><br />
+          <ng-otp-input
+            (onInputChange)="onOtpChange($event)"
+            [config]="{ length: 4 }"
+          ></ng-otp-input
+          ><br />
+          <a href="">Resend OTP</a>
+          <br><br>
+          <span class="button-otp">
+            <button
+              (click)="step3()"
+              mat-raised-button
+              color="primary"
+            >
+              Submit OTP
+            </button>
+          </span>
+        </div>
+
+        <div
+          class="step4"
+          *ngIf="fourth"
+          style="background-color: #ffffff; width: 80%; height: 100%"
+        >
+          <span class="password">
+            <label>Store/Business Name*</label>
+            <input
+              class="form-control"
+              placeholder="Enter Store/Business Name"
+              style="margin-top: 22px; padding: 5%"
+            />
+          </span>
+          <br><br>
+          <span class="button-finish">
+            <button
+              mat-raised-button
+              color="primary"
+            >
+              Continue
+            </button>
+          </span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
