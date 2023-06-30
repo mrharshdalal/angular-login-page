@@ -13,6 +13,12 @@ import { NgOtpInputModule } from  'ng-otp-input';
 import { VerificationComponent } from './verification/verification.component';
 import { LoginComponent } from './login/login.component';
 
+import {FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatStepperModule} from '@angular/material/stepper';
+
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,15 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     AppRoutingModule,
     MatButtonModule, MatDividerModule, MatIconModule, BrowserAnimationsModule,
-    NgOtpInputModule
+    NgOtpInputModule,
+    MatButtonModule,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressBarModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
