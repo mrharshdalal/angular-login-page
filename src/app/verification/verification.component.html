@@ -1,37 +1,355 @@
 <div class="verification-page">
-    <div class="verify-details">
-        <img src="..\assets\Vector.svg" alt="">
-        <h2>Verify Details</h2>
-    </div>
+  <div class="verify-details">
+    <img src="..\assets\Vector.svg" alt="" />
+    <h2>Verify Details</h2>
+  </div>
 
-    <mat-progress-bar mode="determinate" value="80"></mat-progress-bar>
+  <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
 
-    <div class="tab-container">
-        
-        
-        <div class="tab-1">
-            <img src="../assets/Online Store.svg" alt="" >
-            <h3><b> Store Details </b></h3>
+  <div class="tab-container">
+    <span class="tab-1" (click)="tab1click()">
+      <img src="../assets/Online Store.svg" alt="" />
+      <h4>Store Details</h4>
+    </span>
+
+    <span class="tab-2" (click)="tab2click()">
+      <img src="../assets/ID Verified.svg" alt="" />
+      <h4>Owner Identity</h4>
+    </span>
+
+    <span class="tab-3" (click)="tab3click()">
+      <img src="../assets/Business.svg" alt="" />
+      <h4>Business Verification</h4>
+    </span>
+
+    <span class="tab-4" (click)="tab4click()">
+      <img src="../assets/Bank Account.svg" alt="" />
+      <h4>Bank Details</h4>
+    </span>
+  </div>
+
+  <div *ngIf="onlineStore" class="form-store-details">
+    <form id="store-details">
+      <div class="row">
+        <div class="col">
+          <label>Store Name</label>
+          <br />
+          <input placeholder="Enter Store Name" />
         </div>
-            
-        <span class="tab-1">
-            <img src="../assets/ID Verified.svg" alt="">
+        <div class="col-4">
+          <label>Name of Business</label>
+          <br />
+          <select>
+            <option selected>Select your nature of business</option>
+            <option *ngFor="let business of business" [value]="business.value">
+              {{ business.viewValue }}
+            </option>
+          </select>
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>Store Address</label>
+          <br />
+          <textarea
+            placeholder="Enter Address"
+            type="text"
+            rows="5"
+            cols="47"
+            style="height: 150px"
+          ></textarea>
+        </div>
+        <div class="col-8">
+          <label>Store ID</label>
+          <br />
+          <input placeholder="Enter Store ID" /><span
+            id="jewellers.live"
+            style="margin-left: 2%"
+            >@jewellers.live</span
+          >
+          <p>
+            Store ID or Domain is a unique identifier of the your store.
+            <br />
+            Once a "Store ID" is created for a store or domain, it cannot be
+            modified or changed.
+          </p>
+        </div>
+        <div class="col-sm"></div>
+      </div>
 
-        </span>
+      <div class="container">
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-6">
+            <button
+              [disabled]="true"
+              type="submit"
+              mat-raised-button
+              color="primary"
+            >
+              Submit
+            </button>
+          </div>
+          <div class="col-3"></div>
+        </div>
+      </div>
+    </form>
+  </div>
 
-        <span class="tab-1">
-            <img src="../assets/Business.svg" alt="">
+  <div *ngIf="ownerIdentity" class="form-owner-identity">
+    <form id="owner-identity">
+      <div class="row">
+        <div class="col-4">
+          <label>Aadhar Number</label>
+          <br />
+          <input placeholder="Enter Aadhar Number" />
+          <br />
+          <p>Enter the 12 digit Aadhar Number</p>
+        </div>
+        <div class="col-4">
+          <div class="row">
+            <br />
+            <br /><br />
+          </div>
+          <div class="row">
+            <div class="col">
+              <button
+                id="verify-button"
+                [disabled]="true"
+                mat-raised-button
+                color="primary"
+              >
+                Verify
+              </button>
+            </div>
+            <div class="col"></div>
+          </div>
+          <div class="row"></div>
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>Front Side</label>
+          <br />
+          <input placeholder="Upload Image" />
+        </div>
+        <div class="col-4">
+          <label>Back Side</label>
+          <br />
+          <input placeholder="Upload Image" />
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>PAN Name</label>
+          <br />
+          <input placeholder="Enter PAN Name" />
+        </div>
+        <div class="col-4">
+          <label>PAN Number</label>
+          <br />
+          <input placeholder="Enter PAN Number" />
+        </div>
+        <div class="col-sm"></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>Upload PAN</label>
+          <br />
+          <input placeholder="Upload PAN" />
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+      </div>
 
-        </span>
+      <div class="container">
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-6">
+            <button
+              [disabled]="true"
+              type="submit"
+              mat-raised-button
+              color="primary"
+            >
+              Submit
+            </button>
+          </div>
+          <div class="col-3"></div>
+        </div>
+      </div>
+    </form>
+  </div>
 
-        <span class="tab-1">
-            <img src="../assets/Bank Account.svg" alt="">
-        </span>
-    </div>
+  <div *ngIf="businessProof" class="form-business-proof">
+    <form id="business-proof">
+      <div class="row">
+        <div class="col-4">
+          <label>Type of Firm</label>
+          <br />
+          <select (input)="changeHandle($event)" [ngModel]="selectedValue">
+            <option
+              *ngFor="let firm of firm; let i = index"
+              [value]="firm.viewValue"
+              [selected]="i === 0"
+            >
+              {{ firm.viewValue }}
+            </option>
+          </select>
+        </div>
+        <div class="col-4">
+          <div class="row">
+            <br />
+            <br /><br />
+          </div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="row"></div>
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>GSTIN Number</label>
+          <br />
+          <input placeholder="" />
+          <br />
+          <p>Enter GSTIN Number</p>
+        </div>
+        <div class="col-4">
+          <label>Upload GST Certificate</label>
+          <br />
+          <input placeholder="No File Chosen" />
+          <br />
+          <p>Formats Allowed .png</p>
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>Company PAN Number</label>
+          <br />
+          <input placeholder="" />
+        </div>
+        <div class="col-4">
+          <label>Upload PAN </label>
+          <br />
+          <input placeholder="No File Chosen" />
+        </div>
+        <div class="col-sm"></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>Upload Hallmark License</label>
+          <br />
+          <input placeholder="No File Chosen" />
+          <br />
+          <p>Formats allowed</p>
+        </div>
+        <div *ngIf="selectedValue == 'Partnership'" class="col-4">
+          <label>Upload Parternship Deed</label>
+          <br />
+          <input placeholder="No File Chosen" />
+          <br />
+          <p>Formats allowed</p>
+        </div>
+        <div
+          *ngIf="
+            selectedValue == 'Private Limited' ||
+            selectedValue == 'Limited Liability Partnership'
+          "
+          class="col-4"
+        >
+          <label>Upload Certificate of Incorporation(COI)</label>
+          <br />
+          <input placeholder="No File Chosen" />
+          <br />
+          <p>Formats allowed</p>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="selectedValue == 'Private Limited'" class="col-4">
+          <label>Memorandum of Association (MoA)</label>
+          <br />
+          <input placeholder="No File Chosen" />
+          <br />
+          <p>Formats allowed</p>
+        </div>
+        <div
+          *ngIf="selectedValue == 'Limited Liability Partnership'"
+          class="col-4"
+        >
+          <label>LLP Deed</label>
+          <br />
+          <input placeholder="No File Chosen" />
+          <br />
+          <p>Formats allowed</p>
+        </div>
+        <div class="col-4"></div>
+      </div>
 
+      <div class="container">
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-6">
+            <button
+              [disabled]="true"
+              type="submit"
+              mat-raised-button
+              color="primary"
+            >
+              Submit
+            </button>
+          </div>
+          <div class="col-3"></div>
+        </div>
+      </div>
+    </form>
+  </div>
 
+  <div *ngIf="bankDetails" class="form-bank-details">
+    <form id="bank-details">
+      <div class="row">
+        <div class="col-4">
+          <label>Account Number</label>
+          <br />
+          <input placeholder="Enter Account Number" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>IFSC</label>
+          <br />
+          <input placeholder="Enter IFSC Code" />
+          <br />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label>Upload Statement/Cancelled Cheque</label>
+          <br />
+          <input placeholder="No File Chosen" />
+          <p>Formats Allowed .png</p>
 
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <button
+            [disabled]="true"
+            type="submit"
+            mat-raised-button
+            color="primary"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
-
-
-

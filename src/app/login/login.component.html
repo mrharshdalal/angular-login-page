@@ -111,7 +111,7 @@
                   </span>
                   <br /><br />
                   <span class="button-mobile">
-                    <button matStepperNext mat-raised-button color="primary">
+                    <button mat-raised-button color="primary">
                       Continue
                     </button>
                   </span>
@@ -128,14 +128,14 @@
               </form>
             </mat-step>
 
-            <mat-step [stepControl]="thirdFormGroup" >
+            <mat-step>
               
               <ng-template matStepLabel>OTP</ng-template>
               <ng-template matStepperIcon="edit">
                 <mat-icon>done</mat-icon>
               </ng-template>
               
-              <form [formGroup]="thirdFormGroup">
+              <form>
                 <!-- <mat-form-field>
                   <mat-label>Address</mat-label>
                   <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
@@ -143,19 +143,16 @@
                 </mat-form-field> -->
                 <div class="step3">
                   <label>OTP*</label><br /><br />
-                  <form [formGroup]="otpForm">
                   <ng-otp-input
-                  
-                  (onInputChange)="onOtpChange($event)"
+                    (onInputChange)="onOtpChange($event)"
                     [config]="{ length: 4 }"
-                    formControlName="thirdCtrl" required="true"
+                    
                   ></ng-otp-input
-                  >
-                </form><br />
+                  ><br />
                   <a href="">Resend OTP</a>
                   <br /><br />
                   <span class="button-otp">
-                    <button (click)="goToNext()" matStepperNext mat-raised-button color="primary">
+                    <button matStepperNext mat-raised-button color="primary">
                       Submit OTP
                     </button>
                   </span>

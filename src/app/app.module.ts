@@ -20,6 +20,9 @@ import {MatStepperModule} from '@angular/material/stepper';
 
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
+import {NgFor} from '@angular/common';
+import {MatSelectModule} from '@angular/material/select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +41,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
+    MatSelectModule, NgFor
     
   ],
   providers: [],
