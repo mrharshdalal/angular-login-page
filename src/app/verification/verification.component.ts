@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 interface Business {
   value: string;
@@ -13,7 +12,7 @@ interface Firm {
 
 
 @Component({
-  selector: 'app-verification'gi,
+  selector: 'app-verification',
   templateUrl: './verification.component.html',
   styleUrls: ['./verification.component.css'],
   
@@ -33,8 +32,6 @@ export class VerificationComponent {
 
   areStoreDetailsInputsValid: boolean = false;
   isAadhaarNumberValid: boolean = false;
-  isOTPDialogOpen!: boolean;
-  otp!: string;
   
   panName!: string;
   panNumber!: string;
@@ -66,11 +63,6 @@ export class VerificationComponent {
     {value: '4', viewValue: 'Limited Liability Partnership'},
   ];
 
-  constructor(public modalService: NgbModal)
-  {
-
-  }
-
   onSelectChange() {
     this.formValues = {};
   }
@@ -80,24 +72,6 @@ export class VerificationComponent {
     this.selectedValue=value.target.value
   }
   
-
-  openOTPDialog() {
-    if (this.isAadhaarNumberValid) {
-      this.isOTPDialogOpen = true;
-    } else {
-      // Display an error or show a notification for invalid Aadhar Number
-    }
-  }
-
-  verifyOTP() {
-    if (this.otp.length === 4) {
-      // Here you can perform further validation or send the OTP for verification
-      console.log('OTP:', this.otp);
-      this.isOTPDialogOpen = false;
-    } else {
-      // Display an error or show a notification for invalid OTP
-    }
-  }
 
   isFormValid(): boolean {
     console.log(this.gstFile)
@@ -176,7 +150,8 @@ export class VerificationComponent {
   checkInputValues(value:any) {
     console.log(value.target.value)
     this.areStoreDetailsInputsValid = this.storeName !== "" && this.storeID !== "" && this.businessName !== "" && this.storeAddress !== "";
-    this.isAadhaarNumberValid = value.target.value.length === 12;  }
+    this.isAadhaarNumberValid = this.aadhaarNumber !== ""
+  }
   
   tab1click(){
     this.onlineStore=true;
