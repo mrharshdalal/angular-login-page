@@ -12,7 +12,7 @@
       <h4>Store Details</h4>
     </span>
 
-    <span class="tab-2" (click)="tab2click()">
+    <span class="tab-2">
       <img src="../assets/ID Verified.svg" alt="" />
       <h4>Owner Identity</h4>
     </span>
@@ -22,25 +22,35 @@
       <h4>Business Verification</h4>
     </span>
 
-    <span class="tab-4" (click)="tab4click()">
+    <span class="tab-4">
       <img src="../assets/Bank Account.svg" alt="" />
       <h4>Bank Details</h4>
     </span>
   </div>
 
   <div *ngIf="onlineStore" class="form-store-details">
-    <form id="store-details">
+    <div id="store-details">
       <div class="row">
         <div class="col">
           <label>Store Name</label>
           <br />
-          <input placeholder="Enter Store Name" />
+          <input
+            type="text"
+            placeholder="Enter Store Name"
+            [(ngModel)]="storeName"
+            (input)="checkInputValues($event)"
+          />
         </div>
         <div class="col-4">
           <label>Name of Business</label>
           <br />
-          <select>
-            <option selected>Select your nature of business</option>
+          <select
+            [(ngModel)]="businessName"
+            (change)="checkInputValues($event)"
+          >
+            <option value="" disabled selected>
+              Select your nature of business
+            </option>
             <option *ngFor="let business of business" [value]="business.value">
               {{ business.viewValue }}
             </option>
@@ -53,6 +63,8 @@
           <label>Store Address</label>
           <br />
           <textarea
+            [(ngModel)]="storeAddress"
+            (input)="checkInputValues($event)"
             placeholder="Enter Address"
             type="text"
             rows="5"
@@ -63,9 +75,11 @@
         <div class="col-8">
           <label>Store ID</label>
           <br />
-          <input placeholder="Enter Store ID" /><span
-            id="jewellers.live"
-            style="margin-left: 2%"
+          <input
+            placeholder="Enter Store ID"
+            [(ngModel)]="storeID"
+            (input)="checkInputValues($event)"
+          /><span id="jewellers.live" style="margin-left: 2%"
             >@jewellers.live</span
           >
           <p>
@@ -78,32 +92,35 @@
         <div class="col-sm"></div>
       </div>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-6">
-            <button
-              [disabled]="true"
-              type="submit"
-              mat-raised-button
-              color="primary"
-            >
-              Submit
-            </button>
-          </div>
-          <div class="col-3"></div>
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <button
+            [disabled]="!areStoreDetailsInputsValid"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            (click)="tab2click()"
+          >
+            Submit
+          </button>
         </div>
+        <div class="col-3"></div>
       </div>
-    </form>
+    </div>
   </div>
 
   <div *ngIf="ownerIdentity" class="form-owner-identity">
-    <form id="owner-identity">
+    <div id="owner-identity">
       <div class="row">
         <div class="col-4">
           <label>Aadhar Number</label>
           <br />
-          <input placeholder="Enter Aadhar Number" />
+          <input
+            placeholder="Enter Aadhar Number"
+            [(ngModel)]="aadhaarNumber"
+            (input)="checkInputValues($event)"
+          />
           <br />
           <p>Enter the 12 digit Aadhar Number</p>
         </div>
@@ -116,7 +133,7 @@
             <div class="col">
               <button
                 id="verify-button"
-                [disabled]="true"
+                [disabled]="!isAadhaarNumberValid"
                 mat-raised-button
                 color="primary"
               >
@@ -127,18 +144,29 @@
           </div>
           <div class="row"></div>
         </div>
+        
         <div class="col-4"></div>
       </div>
       <div class="row">
         <div class="col-4">
           <label>Front Side</label>
           <br />
-          <input placeholder="Upload Image" />
+          <input
+            type="file"
+            placeholder="Upload Image"
+            accept="image/*"
+            (change)="onFileSelected($event, 'front')"
+          />
         </div>
         <div class="col-4">
           <label>Back Side</label>
           <br />
-          <input placeholder="Upload Image" />
+          <input
+            type="file"
+            placeholder="Upload Image"
+            accept="image/*"
+            (change)="onFileSelected($event, 'back')"
+          />
         </div>
         <div class="col-4"></div>
       </div>
@@ -146,12 +174,16 @@
         <div class="col-4">
           <label>PAN Name</label>
           <br />
-          <input placeholder="Enter PAN Name" />
+          <input placeholder="Enter PAN Name" [(ngModel)]="panName" required />
         </div>
         <div class="col-4">
           <label>PAN Number</label>
           <br />
-          <input placeholder="Enter PAN Number" />
+          <input
+            placeholder="Enter PAN Number"
+            [(ngModel)]="panNumber"
+            required
+          />
         </div>
         <div class="col-sm"></div>
       </div>
@@ -159,33 +191,39 @@
         <div class="col-4">
           <label>Upload PAN</label>
           <br />
-          <input placeholder="Upload PAN" />
+          <input
+            type="file"
+            placeholder="Upload PAN"
+            accept="image/*"
+            (change)="onFileSelected($event, 'pan')"
+          />
         </div>
         <div class="col-4"></div>
         <div class="col-4"></div>
       </div>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-6">
-            <button
-              [disabled]="true"
-              type="submit"
-              mat-raised-button
-              color="primary"
-            >
-              Submit
-            </button>
-          </div>
-          <div class="col-3"></div>
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <button
+            [disabled]="
+              !(panName && panNumber && panUpload && frontFile && backFile)
+            "
+            type="submit"
+            mat-raised-button
+            color="primary"
+            (click)="tab3click()"
+          >
+            Submit
+          </button>
         </div>
+        <div class="col-3"></div>
       </div>
-    </form>
+    </div>
   </div>
 
   <div *ngIf="businessProof" class="form-business-proof">
-    <form id="business-proof">
+    <div id="business-proof">
       <div class="row">
         <div class="col-4">
           <label>Type of Firm</label>
@@ -215,14 +253,19 @@
         <div class="col-4">
           <label>GSTIN Number</label>
           <br />
-          <input placeholder="" />
+          <input placeholder="" [(ngModel)]="gstNumber" required/>
           <br />
           <p>Enter GSTIN Number</p>
         </div>
         <div class="col-4">
           <label>Upload GST Certificate</label>
           <br />
-          <input placeholder="No File Chosen" />
+          <input
+            placeholder="No File Chosen"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event, 'gst')"
+          />
           <br />
           <p>Formats Allowed .png</p>
         </div>
@@ -232,12 +275,17 @@
         <div class="col-4">
           <label>Company PAN Number</label>
           <br />
-          <input placeholder="" />
+          <input placeholder="" [(ngModel)]="companyPanNumber" required/>
         </div>
         <div class="col-4">
           <label>Upload PAN </label>
           <br />
-          <input placeholder="No File Chosen" />
+          <input
+            placeholder="No File Chosen"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event, 'companyPan')"
+          />
         </div>
         <div class="col-sm"></div>
       </div>
@@ -245,14 +293,24 @@
         <div class="col-4">
           <label>Upload Hallmark License</label>
           <br />
-          <input placeholder="No File Chosen" />
+          <input
+            placeholder="No File Chosen"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event, 'hallmark')"
+          />
           <br />
           <p>Formats allowed</p>
         </div>
         <div *ngIf="selectedValue == 'Partnership'" class="col-4">
           <label>Upload Parternship Deed</label>
           <br />
-          <input placeholder="No File Chosen" />
+          <input
+            placeholder="No File Chosen"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event, 'partnership')"
+          />
           <br />
           <p>Formats allowed</p>
         </div>
@@ -265,7 +323,12 @@
         >
           <label>Upload Certificate of Incorporation(COI)</label>
           <br />
-          <input placeholder="No File Chosen" />
+          <input
+            placeholder="No File Chosen"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event, 'coi')"
+          />
           <br />
           <p>Formats allowed</p>
         </div>
@@ -274,7 +337,12 @@
         <div *ngIf="selectedValue == 'Private Limited'" class="col-4">
           <label>Memorandum of Association (MoA)</label>
           <br />
-          <input placeholder="No File Chosen" />
+          <input
+            placeholder="No File Chosen"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event, 'moa')"
+          />
           <br />
           <p>Formats allowed</p>
         </div>
@@ -284,34 +352,35 @@
         >
           <label>LLP Deed</label>
           <br />
-          <input placeholder="No File Chosen" />
+          <input placeholder="No File Chosen" type="file"
+          accept="image/*"
+          (change)="onFileSelected($event, 'llp')"/>
           <br />
           <p>Formats allowed</p>
         </div>
         <div class="col-4"></div>
       </div>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-6">
-            <button
-              [disabled]="true"
-              type="submit"
-              mat-raised-button
-              color="primary"
-            >
-              Submit
-            </button>
-          </div>
-          <div class="col-3"></div>
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <button
+            [disabled]="!isFormValid()"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            (click)="tab4click()"
+          >
+            Submit
+          </button>
         </div>
+        <div class="col-3"></div>
       </div>
-    </form>
+    </div>
   </div>
 
   <div *ngIf="bankDetails" class="form-bank-details">
-    <form id="bank-details">
+    <div id="bank-details">
       <div class="row">
         <div class="col-4">
           <label>Account Number</label>
@@ -333,7 +402,6 @@
           <br />
           <input placeholder="No File Chosen" />
           <p>Formats Allowed .png</p>
-
         </div>
       </div>
 
@@ -350,6 +418,6 @@
           </button>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
