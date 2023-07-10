@@ -136,6 +136,8 @@
                 [disabled]="!isAadhaarNumberValid"
                 mat-raised-button
                 color="primary"
+                (click)="openOTPDialog()"
+
               >
                 Verify
               </button>
@@ -144,7 +146,20 @@
           </div>
           <div class="row"></div>
         </div>
-        
+        <div class="overlay" *ngIf="isOTPDialogOpen">
+          <div class="dialog-box">
+            <h2>Enter OTP</h2>
+            <input
+              type="text"
+              [(ngModel)]="otp"
+              maxlength="4"
+              pattern="[0-9]{4}"
+              title="Enter a 4-digit OTP"
+            />
+            <br /><br />
+            <button mat-raised-button color="primary" (click)="verifyOTP()">Submit</button>
+          </div>
+        </div>
         <div class="col-4"></div>
       </div>
       <div class="row">
@@ -421,3 +436,50 @@
     </div>
   </div>
 </div>
+<ng-template #continue let-modal>
+  <div class="myModal">
+    <div class="modal-content p-2">
+      <div class="modal-header" style="border: 0; height: 0">
+        <h1 class="modal-title fbold"></h1>
+        <button
+          type="button"
+          class="close closeButton btn"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+
+          <h1 class="fbold mt-2">Warning!</h1>
+
+          <p
+            class="warning_text"
+
+          >
+          Are you sure you want to save the changes?
+          </p>
+          <div  class="warning_block">
+            <div class="warning_block_note ms-3 mb-2">Note:</div>
+
+          </div>
+          <button
+            (click)="modal.dismiss('Cross click')"
+            type="button"
+            class="btn pause_btn mt-3"
+          >
+          Apply Changes
+          </button>
+          <button
+          (click)="modal.dismiss('Cross click')"
+          type="button"
+          class="btn pause_btn mt-3">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
